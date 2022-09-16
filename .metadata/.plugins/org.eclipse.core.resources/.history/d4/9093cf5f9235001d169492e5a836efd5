@@ -1,0 +1,29 @@
+/*===============
+  DBConn.java
+===============*/
+
+package com.util;
+
+import java.sql.Connection;
+
+public class DBConn
+{
+	private static Connection dbConn;
+	
+	public static Connection getConnection()
+	{
+		if(dbConn == null)
+		{
+			try
+			{
+				String url = "jdbc:oracle:thin:@211.238.142.52:1521:xe";
+				String user = "scott";
+				String pwd = "tiger";
+			} catch (Exception e)
+			{
+				System.out.println(e.toString());
+			}
+		}
+	}
+
+}

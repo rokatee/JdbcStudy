@@ -1,0 +1,17 @@
+/*===============
+  Test001.java
+  - Database 연결 테스트
+===============*/
+
+
+package com.test;
+
+import com.util.DBConn;
+
+public class Test001
+{
+	public Test001()
+	{
+		DBConn.getConnection();
+	}
+}
