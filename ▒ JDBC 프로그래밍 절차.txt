@@ -16,7 +16,6 @@
 
    ○ DML(insert, update, delete)문인 경우
       int updateCount = stmt.executeUpdate(sql);
-
       → 영향받은 레코드 수(적용된 행의 갯수) 반환
    
    ○ select 문인 경우

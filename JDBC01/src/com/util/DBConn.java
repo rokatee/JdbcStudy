@@ -16,7 +16,7 @@ public class DBConn
 {
 	// 변수 선언
 	private static Connection dbConn;
-    // private → 정보 은닉	
+    // private → 정보 은닉
 	// static → 정적 변수
 	// 자동으로 초기화 지원 → null
 	

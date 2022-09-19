@@ -1,7 +1,7 @@
-/*===============
+/*=========================
   Test001.java
   - Database 연결 테스트
-===============*/
+=========================*/
 
 package com.test;
 
@@ -13,6 +13,7 @@ public class Test001
 {
 	public static void main(String[] args)
 	{
+		// 연결 객체 준비
 		Connection conn = DBConn.getConnection();
 		
 		if (conn != null)
