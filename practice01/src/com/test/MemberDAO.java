@@ -17,9 +17,9 @@ public class MemberDAO
 {
 	// 주요 변수 선언(주요 속성 구성) → DB 연결 객체
 	private Connection conn;
-
+	
 	// 생성자 정의 → 사용자 정의 생성자
-	public MemberDAO() throws ClassNotFoundException, SQLException
+	public MemberDAO()
 	{
 		// DB 연결
 		conn = DBConn.getConnection();
@@ -30,38 +30,21 @@ public class MemberDAO
 	{
 		// 반환할 결과값을 담을 변수(적용된 행의 개수)
 		int result = 0;
-		
+	
 		// 작업 객체 생성
 		Statement stmt = conn.createStatement();
-		
-		/*
-		 ※ Statement 의 종류
-		    - Statement 
-		      하나의 쿼리를 사용하고 나면 더 이상 사용할 수 없다.
-		    - PreparedStatement 
-		      하나의 PreparedStatement 로 쿼리를 여러 번 처리할 수 있다.
-		    - CallableStatement
-		      데이터베이스 내의 스토어드 프로시저나 함수 등을 호출할 수 있다.
-		    
-		  ※ Statement 의 의미
-		     자바에서 사용되는 3가지 종류의 작업 객체들은
-		     데이터베이스로 쿼리를 담아서 보내는 그릇 정도로 생각하자.
-		     즉, 작업 객체에 쿼리를 실어 데이터베이스로 보내버리면
-		     그 내용이 데이터베이스에서 처리되는 것이다.
-		     이때, 한 번 사용하고 버리는 그릇은 Statement 이며,
-		     재사용이 가능한 그릇은 PreparedStatement 이다.
-		 */
-		
+	
 		// 쿼리문 준비
 		String sql = String.format("INSERT INTO TBL_MEMBER(SID, NAME, TEL)"
-						+ " VALUES(MEMBERSEQ.NEXTVAL, '%s', '%s')"
-						, dto.getName(), dto.getTel());
+								 + " VALUES(MEMBERSEQ.NEXTVAL, '%s', '%s')"
+								, dto.getName(), dto.getTel());
+	
 		// 쿼리문 실행
 		result = stmt.executeUpdate(sql);
-		
+	
 		// 리소스 반납
 		stmt.close();
-		
+	
 		// 최종 결과값 반환
 		return result;
 	
@@ -73,22 +56,19 @@ public class MemberDAO
 	{
 		// 결과값으로 반환하게 될 변수 선언 및 초기화
 		int result = 0;
-		
 		// 작업 객체 생성
 		Statement stmt = conn.createStatement();
-		
+	
 		// 쿼리문 준비
 		String sql = "SELECT COUNT(*) AS COUNT FROM TBL_MEMBER";
-							// count에 별칭을 주는 이유는
-							// while문 작성시 특수문자가 들어가면 안되기 때문(line 91)
-		
+	
 		// 쿼리문 실행 → select 쿼리문 → ResultSet 반환
 		ResultSet rs = stmt.executeQuery(sql);
-		
+	
 		// ResultSet 처리 → 반복문 구성
-		while (rs.next())					// → if (rs.next()) 로도 처리 가능
-		{									//	  (다중 레코드가 아닌 단일 레코드 이기 때문)
-			result = rs.getInt("COUNT");	// → result = rs.getInt(1); → ※ 컬럼 인덱스는 1부터...
+		while (rs.next())
+		{
+			result = rs.getInt("COUNT");
 		}
 		
 		// 리소스 반납
@@ -97,46 +77,21 @@ public class MemberDAO
 		
 		// 최종 결과값 반환
 		return result;
-		
 	} //end count()
 	
 	
 	// 기능 → 메소드 정의 → 데이터 전체 조회하는 기능 → select 쿼리문 수행
-	/*
-	반환 자료형에 대한 고찰
-	SELECT NAME
-	FROM TBL_MEMBER
-	WHERE SID = 1;
-	→ String
-	
-	SELECT NAME
-	FROM TBL_MEMBER;
-	→ String 들 → String 배열이나 String을 요소로 취하는 자료구조
-	
-	SELECT SID, NAME, TEL
-	FROM TBL_MEMBER
-	WHERE SID = 1;
-	→ MemeberDTO
-	
-	SELECT SID, NAME, TEL
-	FROM TBL_MEMBER;
-	→ MemeberDTO 들 → MemeberDTO 배열이나 MemeberDTO을 요소로 취하는 자료구조
-	// 아래 메소드는 마지막 쿼리문을 위한 자료구조를 쓰면 된다
-	*/
-	public ArrayList<MemberDTO> lists() throws SQLException
+	public ArrayList<MemberDTO> list() throws SQLException
 	{
 		// 결과값으로 반환하게 될 변수 선언 및 초기화
 		ArrayList<MemberDTO> result = new ArrayList<MemberDTO>();
 		
 		// 작업 객체 생성
 		Statement stmt = conn.createStatement();
-		
 		// 쿼리문 준비 → select 
 		String sql = "SELECT SID, NAME, TEL FROM TBL_MEMBER ORDER BY SID";
-		
 		// 쿼리문 실행 → select 쿼리문 → ResultSet 반환
 		ResultSet rs = stmt.executeQuery(sql);
-		
 		// ResultSet 처리 → 반복문 구성 → MemberDTO 인스턴스 생성 → 속성 구성 → ArrayList에 적재
 		while (rs.next())
 		{
@@ -144,15 +99,15 @@ public class MemberDAO
 			MemberDTO dto = new MemberDTO();
 			
 			// 생성된 MemberDTO 객체에 속성들 채워넣기
-	 		dto.setSid(rs.getString("SID"));		// dto.setSid(rs.getString(1));
-	 		dto.setName(rs.getString("NAME"));		// dto.setName(rs.getString(2));
-	 		dto.setTel(rs.getString("TEL"));		// dto.setTel(rs.getString(3));
-	 		
-	 		// 리스트에 값 넣기
+			dto.setSid(rs.getString("SID"));
+			dto.setName(rs.getString("NAME"));
+			dto.setTel(rs.getString("TEL"));
+			
+			// 리스트에 값 넣기
 			// ArrayList<ScoreDTO>타입의 result변수에 dto데이터 추가
-	 		result.add(dto);
+			result.add(dto);
 		}
-		
+	
 		// 리소스 반납
 		rs.close();
 		stmt.close();
@@ -163,10 +118,9 @@ public class MemberDAO
 	} // end lists()
 	
 	// 메소드 정의 → 데이터베이스 연결 종료 → DBConn활용
-	public void close() throws SQLException
+	public void close()
 	{
 		DBConn.close();
 	}
-	
 	
 } // end class MemberDAO

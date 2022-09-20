@@ -213,9 +213,50 @@ public class Process
 	{
 		try
 		{
+			Scanner sc = new Scanner(System.in);
+			
+			System.out.println("삭제할 번호를 입력하세요 : ");
+			int sid = sc.nextInt();
 			
 			
+			dao.connection();
 			
+			ArrayList<ScoreDTO> arrayList = dao.list(sid);
+			
+			if (arrayList.size() > 0)
+			{
+				System.out.println("번호 이름 국어 영어 수학 충점 평균 석차");
+				
+				for (ScoreDTO dto : arrayList)
+				{
+					System.out.printf("%3s %4s %5d %4d %4d %5d %5.1f %5d\n"
+							, dto.getSid(), dto.getName()
+							, dto.getKor(), dto.getEng(), dto.getMat()
+							, dto.getTot(), dto.getAvg(), dto.getRank());
+				}
+				
+				System.out.println(">> 정말 삭제하시겠습니까?(Y/N) : ");
+				String response = sc.next();
+				
+				if (response.equals("Y") || response.equals("y"))
+				{
+					int result = dao.remove(sid);
+					if (result > 0)
+					{
+						System.out.println("삭제 완료");
+					}
+					else
+					{
+						System.out.println("삭제 취소");
+					}
+				}
+			}
+			else
+			{
+				System.out.println("삭제할 대상이 존재하지 않습니다");
+			}
+			
+			dao.close();
 			
 		} catch (Exception e)
 		{
