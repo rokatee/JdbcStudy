@@ -79,6 +79,8 @@ public class MemberDAO
 		
 		// 쿼리문 준비
 		String sql = "SELECT COUNT(*) AS COUNT FROM TBL_MEMBER";
+							// count에 별칭을 주는 이유는
+							// while문 작성시 특수문자가 들어가면 안되기 때문(line 91)
 		
 		// 쿼리문 실행 → select 쿼리문 → ResultSet 반환
 		ResultSet rs = stmt.executeQuery(sql);

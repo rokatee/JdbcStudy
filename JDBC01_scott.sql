@@ -2,8 +2,11 @@ SELECT USER
 FROM DUAL;
 --==>> SCOTT
 
---○ 기존 테이블 제거
-DROP TABLE TBL_MEMBER PURGE;
+--○ 기존 테이블 체크 및 제거
+SELECT *
+FROM TBL_MEMBER;
+
+--DROP TABLE TBL_MEMBER PURGE;
 --==>> Table TBL_MEMBER이(가) 삭제되었습니다.
 
 --○ 실습 테이블 생성(TBL_MEMBER)

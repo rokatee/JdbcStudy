@@ -27,21 +27,37 @@ ADD ( CONSTRAINT SCORE_KOR_CK CHECK(KOR BETWEEN 0 AND 100)
 
 
 
+--○ 데이터 잘라내기
+TRUNCATE TABLE TBL_SCORE;
+--==>> Table TBL_SCORE이(가) 잘렸습니다.
 
+--○ 시퀀스 생성
+CREATE SEQUENCE SCORESEQ
+NOCACHE;
+--==>> Sequence SCORESEQ이(가) 생성되었습니다.
 
+--○ 조회(확인)
+SELECT *
+FROM TBL_SCORE;
+--==>> 조회 결과 없음
 
+--○ 데이터 입력 쿼리문 준비
+INSERT INTO TBL_SCORE(SID, NAME, KOR, ENG, MAT) VALUES(MEMBERSEQ.NEXTVAL, '박원석', 80, 75, 60)
+;
 
+--○ 인원 수 확인 쿼리문 구성
+SELECT COUNT(*) AS COUNT
+FROM TBL_SCORE;
+--> 자바에서 사용하기 위해 한 줄 구성
+SELECT COUNT(*) AS COUNT FROM TBL_SCORE
+;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+--○ 전체 리스트 조회 쿼리문 구성
+SELECT SID, NAME, KOR, ENG, MAT
+     , (KOR+ENG+MAT) AS TOT
+     , (KOR+ENG+MAT)/3 AS AVG 
+FROM TBL_SCORE 
+ORDER BY SID ASC;
+--> 자바에서 사용하기 위해 한 줄 구성
+SELECT SID, NAME, KOR, ENG, MAT, (KOR+ENG+MAT)AS TOT, (KOR+ENG+MAT)/3 AS AVG FROM TBL_SCORE ORDER BY SID ASC
+;

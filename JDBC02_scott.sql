@@ -29,7 +29,6 @@ FROM TBL_MEMBER;
 --> 자바에서 사용하기 위해 한 줄 구성
 SELECT COUNT(*) AS COUNT FROM TBL_MEMBER
 ;
---==>>
 
 
 --○ 전체 리스트 조회 쿼리문 구성

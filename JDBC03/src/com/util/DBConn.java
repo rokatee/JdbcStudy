@@ -42,7 +42,7 @@ public class DBConn
 		return dbConn;
 	}
 	
-	public void close() throws SQLException
+	public static void close() throws SQLException
 	{
 		if (dbConn != null)
 		{
