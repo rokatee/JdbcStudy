@@ -3,13 +3,13 @@ package com.test;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class Process
+public class ScoreProcess
 {
 	// 주요 속성 구성 → 데이터베이스 액션 처리 전담 객체 → ScoreDAO
 	private ScoreDAO dao;
 	
 	// 생성자 정의 → 사용자 정의 생성자
-	public Process()
+	public ScoreProcess()
 	{
 		dao = new ScoreDAO();
 	}
@@ -78,7 +78,7 @@ public class Process
 			
 			System.out.println();
 			System.out.printf("전체 인원 : %d명\n", count);
-			System.out.println("번호  이름  국어 영어 수학 총점  평균  석차");
+			System.out.println("번호  이름   국어 영어 수학  총점  평균   석차");
 			
 			// 반복문을 통한 리스트 출력
 			for (ScoreDTO dto : dao.list())
@@ -118,10 +118,11 @@ public class Process
 			// dao 의 list() 메소드 호출 → 매개변수로 검색할 이름 넘겨주기
 			ArrayList<ScoreDTO> arrayList = dao.list(name);
 			
+			// 사이즈가 0보다 클 경우
 			if (arrayList.size() > 0)
 			{
-				// 리스트 출력
-				System.out.println("번호  이름  국어 영어 수학 총점  평균  석차");
+				// 삭제할 데이터를 찾았다는 의미 → 리스트 출력
+				System.out.println("번호  이름   국어 영어 수학  총점  평균   석차");
 				for (ScoreDTO dto : arrayList)
 				{
 					System.out.printf("%3s %4s %5d %4d %4d %5d %5.1f %5d\n"
@@ -130,7 +131,7 @@ public class Process
 							, dto.getTot(), dto.getAvg(), dto.getRank());
 				}
 			}
-			else
+			else	// 0보다 작을 경우
 			{
 				// 검색 대상이 존재하지 않음
 				System.out.println("검색 결과가 존재하지 않습니다.");
@@ -152,20 +153,24 @@ public class Process
 		{
 			// 수정할 학생의 번호 입력
 			Scanner sc = new Scanner(System.in);
-			System.out.println("수정할 학생의 번호를 입력하세요 : ");
+			System.out.print("수정할 학생의 번호를 입력하세요 : ");
 			int sid = sc.nextInt();
 			
 			// 입력받은 번호로 체크해야 할 로직 적용 삽입 가능
 			// ex. 번호만 입력해야하는데 숫자나 특수문자가 입력되어 있으면 db연결 하지 않는 것
 			
+			// 데이터베이스 연결
 			dao.connection();
 			
+			// dao 의 list() 메소드 호출 → 매개변수로 검색할 번호 넘겨주기
 			ArrayList<ScoreDTO> arrayList = dao.list(sid);
 			
+			// 사이즈가 0보다 클 경우
 			if (arrayList.size() > 0)
 			{
-				// 대상 확인
-				System.out.println("번호  이름  국어 영어 수학 총점  평균  석차");
+				System.out.println("번호  이름   국어 영어 수학  총점  평균   석차");
+
+				// 삭제할 데이터를 찾았다는 의미 → 리스트 출력
 				for (ScoreDTO dto : arrayList)
 				{
 					System.out.printf("%3s %4s %5d %4d %4d %5d %5.1f %5d\n"
@@ -193,7 +198,7 @@ public class Process
 					System.out.println(">> 수정이 완료되었습니다");
 				
 			}
-			else
+			else	// 0보다 작을 경우
 			{
 				// 수정 대상이 존재하지 않는 상황
 				System.out.println(">> 수정 대상이 존재하지 않습니다");
@@ -213,20 +218,26 @@ public class Process
 	{
 		try
 		{
+			// 삭제할 데이터의 학생 번호 입력
 			Scanner sc = new Scanner(System.in);
 			
-			System.out.println("삭제할 번호를 입력하세요 : ");
+			System.out.print("삭제할 번호를 입력하세요 : ");
 			int sid = sc.nextInt();
 			
+			// 입력받은 번호에 대한 유효성 검사 구문 삽입 가능
 			
+			// 데이터베이스 연결
 			dao.connection();
 			
+			// dao 의 list() 메소드 호출 → 매개변수로 검색할 번호 넘겨주기
 			ArrayList<ScoreDTO> arrayList = dao.list(sid);
 			
+			// 사이즈가 0보다 클 경우
 			if (arrayList.size() > 0)
 			{
-				System.out.println("번호 이름 국어 영어 수학 충점 평균 석차");
+				System.out.println("번호  이름   국어 영어 수학  총점  평균   석차");
 				
+				// 삭제할 데이터를 찾았다는 의미 → 리스트 출력
 				for (ScoreDTO dto : arrayList)
 				{
 					System.out.printf("%3s %4s %5d %4d %4d %5d %5.1f %5d\n"
@@ -243,16 +254,17 @@ public class Process
 					int result = dao.remove(sid);
 					if (result > 0)
 					{
-						System.out.println("삭제 완료");
+						System.out.println("삭제 완료되었습니다");
 					}
 					else
 					{
-						System.out.println("삭제 취소");
+						System.out.println("취소 되었습니다");
 					}
 				}
 			}
-			else
+			else	// 0보다 작을 경우
 			{
+				// 검색 대상이 존재하지 않음
 				System.out.println("삭제할 대상이 존재하지 않습니다");
 			}
 			
@@ -263,6 +275,4 @@ public class Process
 			System.out.println(e.toString());
 		}
 	}
-	
-	
 }

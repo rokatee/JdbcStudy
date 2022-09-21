@@ -1,11 +1,7 @@
 INDEX VERSION 1.4+C:\JdbcStudy\.metadata\.plugins\org.eclipse.wst.jsdt.core\indexes
-3145166556.index
 3348818519.index
-1702833594.index
-581399276.index
-2891209815.index
 3085967064.index
 788090722.index
-2261802209.index
+2963135169.index
 2057722781.index
 1509851124.index

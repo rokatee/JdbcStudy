@@ -202,7 +202,7 @@ public class ScoreDAO
 		
 		Statement stmt = conn.createStatement();
 		
-		String sql = String.format("DELETE FROM TBL_SCORE WHERE SID = 1", sid);
+		String sql = String.format("DELETE FROM TBL_SCORE WHERE SID = %s", sid);
 		
 		result = stmt.executeUpdate(sql);
 		
