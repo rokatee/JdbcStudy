@@ -36,6 +36,7 @@ DROP SEQUENCE SCORESEQ;
 CREATE SEQUENCE SCORESEQ
 NOCACHE;
 --==>> Sequence SCORESEQ이(가) 생성되었습니다.
+--drop SEQUENCE SCORESEQ;
 
 --○ 데이터베이스 액션 처리에 필요한 쿼리문 준비
 -- 1. 데이터 입력 쿼리문 구성

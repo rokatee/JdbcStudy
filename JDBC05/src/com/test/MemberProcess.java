@@ -101,7 +101,7 @@ public class MemberProcess
 		{
 			System.out.println(e.toString());
 		}
-		
+	
 	} // end memberInsert()
 	
 	// 직원 전체 출력 기능
