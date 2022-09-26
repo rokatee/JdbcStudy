@@ -110,11 +110,13 @@ public class ScoreDAO
 								   + " FROM TBL_SCORE"
 								 + ")"
 								+ " WHERE NAME LIKE ?", name);
+							  //+ " WHERE NAME LIKE %||?||%", name);	//line 119와 연동
 		try
 		{
 			PreparedStatement pstmt = conn.prepareStatement(sql);
 			
 			pstmt.setString(1, "%%%"+name+"%%");
+			//pstmt.setString(1, name);									//line 113과 연동
 			
 			ResultSet rs = pstmt.executeQuery();
 			
